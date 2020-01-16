@@ -2,6 +2,16 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+// const cards = document.querySelector(".cards")
+
+const username = "lihuang-zheng"
+axios.get("https://api.github.com/users/" + username)
+     .then(response => {
+       cards.append(createCard(response.data))
+     })
+     .catch(() => {
+       console.log("Not data found for " + username)
+     })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -25,6 +35,16 @@
 */
 
 const followersArray = [];
+axios.get("https://api.github.com/users/" + username + "/followers")
+     .then(response => {
+        for (followerData of response.data) {
+            axios.get("https://api.github.com/users/" + followerData.login)
+                 .then(response => { cards.append(createCard(response.data)); } )
+                 .catch(() => { console.log("No data found for " + followerData.login); });
+            followersArray.push(followerData.login);
+        }
+      })
+      .catch(() => { console.log("No data found for " + username); });
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -45,6 +65,7 @@ const followersArray = [];
 </div>
 
 */
+
 
 /* List of LS Instructors Github username's: 
   tetondan
