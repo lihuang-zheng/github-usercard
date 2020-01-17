@@ -2,7 +2,7 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-// const cards = document.querySelector(".cards")
+const cards = document.querySelector(".cards")
 
 const username = "lihuang-zheng"
 axios.get("https://api.github.com/users/" + username)
