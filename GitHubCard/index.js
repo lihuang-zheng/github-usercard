@@ -65,7 +65,42 @@ axios.get("https://api.github.com/users/" + username + "/followers")
 </div>
 
 */
+function createCard(data) {
+  const divCard = document.createElement("div");
+  divCard.classList.add("card");
 
+  const img = createAndAppend("img", divCard, {src: data["avatar_url"]});
+
+  const cardInfo = createAndAppend("div", divCard);
+
+    const h3 = createAndAppend("h3", cardInfo, {textContent: data.name});
+    const pUsername = createAndAppend("p", cardInfo, {class: "username", textContent: data.login});
+    const pLocation = createAndAppend("p", cardInfo, {textContent: "Location: " + data.location});
+    const pProfile = createAndAppend("p", cardInfo, {textContent: "Profile: "});
+    const profileLink = createAndAppend("a", pProfile, {href: "https://github.com/" + data.login, textContent: "https://github.com/" + data.login});
+    const pfollowers = createAndAppend("p", cardInfo, {textContent: "Followers: " + data.followers});
+    const pfollowing = createAndAppend("p", cardInfo, {textContent: "Following: " + data.following});
+    const pBio = createAndAppend("p", cardInfo, {textContent: "Bio: " + data.bio});
+  
+  return divCard;
+}
+
+function createAndAppend(element, parent, data) {
+  const newElement = document.createElement(element);
+  
+  for (key in data) {
+      if (key === "textContent") { 
+        newElement.textContent = data[key]; 
+      }
+      else {
+        newElement.setAttribute(key, data[key]); 
+      }
+  }
+
+  parent.append(newElement);
+  
+  return newElement;
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
